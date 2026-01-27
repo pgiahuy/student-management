@@ -8,12 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/classes")
-@Controller
+@RequestMapping("/classes")
+@RestController
 @RequiredArgsConstructor
 public class ClassController {
 
@@ -28,6 +29,12 @@ public class ClassController {
     public ResponseEntity<ClassResponseDTO> getClass(Long id) {
         ClassResponseDTO  c =  classSerive.getClassById(id);
         return c == null ?  ResponseEntity.notFound().build() : ResponseEntity.ok(c);
+    }
+
+    @GetMapping("/by-faculty/{facultyId}")
+    public ResponseEntity<List<ClassResponseDTO> > getClassByFaculty(@PathVariable Long facultyId) {
+        List<ClassResponseDTO> classes = classSerive.getClassByFacultyId(facultyId);
+        return classes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(classes);
     }
 
     @PostMapping
