@@ -31,7 +31,7 @@ public class ClassSerive {
     }
 
     public List<ClassResponseDTO> getClassByFacultyId(Long facultyId) {
-        return classRepository.findByFacultyId(facultyId).stream().map(ClassMapper::toResponseDTO).toList();
+        return classRepository.findByFaculty_Id(facultyId).stream().map(ClassMapper::toResponseDTO).toList();
     }
 
     public ClassResponseDTO createClass(ClassRequestDTO request) {
@@ -53,6 +53,13 @@ public class ClassSerive {
                 new RuntimeException("Class Not Found"));
 
         EntityUtils.copyNoNullProperties(request, c);
+
+        if (request.getFacultyId() != null) {
+            FacultyEntity fa = facultyRepository.findById(request.getFacultyId())
+                    .orElseThrow(() -> new RuntimeException("Faculty not found"));
+            c.setFaculty(fa);
+        }
+
         ClassEntity saved = classRepository.save(c);
         return ClassMapper.toResponseDTO(saved);
 

@@ -30,6 +30,12 @@ public class StudentController {
         return studentResponseDTO!=null ?  ResponseEntity.ok(studentResponseDTO) : ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/by-class/{classId}")
+    public ResponseEntity<List<StudentResponseDTO>> getStudentsByClass(@PathVariable Long classId) {
+        List<StudentResponseDTO> students = studentService.getStudentsByClassId(classId);
+        return students != null ? ResponseEntity.ok(students) : ResponseEntity.noContent().build();
+    }
+
     @PostMapping
     public ResponseEntity<StudentResponseDTO> createStudent(@RequestBody StudentRequestDTO request) {
         StudentResponseDTO std = studentService.createStudent(request);

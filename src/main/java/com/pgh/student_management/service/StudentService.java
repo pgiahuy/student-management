@@ -30,6 +30,10 @@ public class StudentService {
         return studentRepository.findById(id).map(StudentMapper::toResponseDTO).orElse(null);
     }
 
+    public List<StudentResponseDTO> getStudentsByClassId(Long classId) {
+        return studentRepository.findByAClass_Id(classId).stream().map(StudentMapper::toResponseDTO).toList();
+    }
+
     public StudentResponseDTO createStudent (StudentRequestDTO request) {
         ClassEntity aClass = classRepository.findById(request.getClassId())
                 .orElseThrow(() -> new RuntimeException("Class not found"));
@@ -50,6 +54,13 @@ public class StudentService {
         StudentEntity student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         EntityUtils.copyNoNullProperties(request,student);
+
+        if (request.getClassId() != null) {
+            ClassEntity clazz = classRepository.findById(request.getClassId())
+                    .orElseThrow(() -> new RuntimeException("Class not found"));
+            student.setAClass(clazz);
+        }
+
         studentRepository.save(student);
         return StudentMapper.toResponseDTO(student);
     }

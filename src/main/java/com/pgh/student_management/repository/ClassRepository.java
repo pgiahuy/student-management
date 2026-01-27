@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ClassRepository extends JpaRepository<ClassEntity,Long> {
-    List<ClassEntity> findByFacultyId(Long facultyId);
+    List<ClassEntity> findByFaculty_Id(Long id);
 }
