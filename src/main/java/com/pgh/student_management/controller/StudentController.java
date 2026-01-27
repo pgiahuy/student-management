@@ -2,16 +2,10 @@ package com.pgh.student_management.controller;
 
 import com.pgh.student_management.dto.request.StudentRequestDTO;
 import com.pgh.student_management.dto.response.StudentResponseDTO;
-import com.pgh.student_management.entity.ClassEntity;
-import com.pgh.student_management.entity.StudentEntity;
-import com.pgh.student_management.mapper.StudentMapper;
-import com.pgh.student_management.repository.ClassRepository;
-import com.pgh.student_management.repository.StudentRepository;
+import com.pgh.student_management.service.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.autoconfigure.JacksonProperties;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,31 +16,35 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
-    private final StudentRepository studentRepository;
-    private final ClassRepository classRepository;
+    private final StudentService studentService;
+
 
     @GetMapping
     public List<StudentResponseDTO> getStudents() {
-        return  studentRepository.findAll().stream().map(StudentMapper::toResponseDTO).toList();
+        return studentService.getAllStudents();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable String id) {
+        StudentResponseDTO studentResponseDTO = studentService.getStudentById(id);
+        return studentResponseDTO!=null ?  ResponseEntity.ok(studentResponseDTO) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public StudentResponseDTO createStudent(@RequestBody StudentRequestDTO request) {
+    public ResponseEntity<StudentResponseDTO> createStudent(@RequestBody StudentRequestDTO request) {
+        StudentResponseDTO std = studentService.createStudent(request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("Location", "/students/" + std.getId())
+                .body(std);
+    }
 
-        ClassEntity aClass = classRepository.findById(request.getClassId())
-                .orElseThrow(() -> new RuntimeException("Class not found"));
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable String id, @RequestBody StudentRequestDTO request) {
+        return ResponseEntity.ok(studentService.updateStudent(id,request));
+    }
 
-        StudentEntity student = StudentEntity.builder()
-                .id(request.getId())
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .aClass(aClass)
-                .build();
-
-        StudentEntity saved = studentRepository.save(student);
-
-        return StudentMapper.toResponseDTO(saved);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudentById(@PathVariable String id) {
+        return studentService.deleteStudent(id) ?  ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
