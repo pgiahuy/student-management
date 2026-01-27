@@ -1,12 +1,12 @@
 # Student Management System
 
 ## Objective
-- Build a student management application using Spring Boot
+- Build a student management application with Spring Boot following a client–server architecture.
 - Practice CRUD operations with a clean backend architecture
 - Learn proper data handling and layer separation
 
 ## Technologies
-- Java, Spring Boot, Spring MVC
+- Java, Spring Boot, Spring MVC (RESTful API)
 - Spring Data JPA, Hibernate
 - Maven, MySQL
 
