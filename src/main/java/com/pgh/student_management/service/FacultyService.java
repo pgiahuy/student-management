@@ -17,7 +17,7 @@ import java.util.List;
 public class FacultyService {
     private final FacultyRepository facultyRepository;
 
-    public List<FacultyResponseDTO> getFaculties() {
+    public List<FacultyResponseDTO> getAllFaculties() {
         return facultyRepository.findAll().stream().map(FacultyMapper::toResponseDTO).toList();
     }
 
@@ -27,8 +27,8 @@ public class FacultyService {
 
     public FacultyResponseDTO createFaculty (FacultyRequestDTO request) {
         FacultyEntity fac = FacultyEntity.builder()
-                .email(request.getFacultyName())
-                .name(request.getFacultyName())
+                .email(request.getEmail())
+                .name(request.getName())
                 .build();
 
         FacultyEntity saved = facultyRepository.save(fac);
@@ -36,8 +36,8 @@ public class FacultyService {
     }
 
     public FacultyResponseDTO updateFaculty(Long id, FacultyRequestDTO request) {
-        FacultyEntity fac = facultyRepository.findById(id).orElseThrow(()-> new RuntimeException("faculty not found"));
-
+        FacultyEntity fac = facultyRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("faculty not found"));
         EntityUtils.copyNoNullProperties(request,fac);
         facultyRepository.save(fac);
         return FacultyMapper.toResponseDTO(fac);

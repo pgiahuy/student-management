@@ -6,7 +6,8 @@ import com.pgh.student_management.entity.FacultyEntity;
 public class FacultyMapper {
     public static FacultyResponseDTO toResponseDTO(FacultyEntity fac) {
         return FacultyResponseDTO.builder()
-                .facultyName(fac.getName())
+                .id(fac.getId())
+                .name(fac.getName())
                 .email(fac.getEmail())
                 .build();
     }

@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class FacultyResponseDTO {
-    private String facultyName;
+    private Long id;
+    private String name;
     private String email;
 
 }

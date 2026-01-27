@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class FacultyRequestDTO {
-    private String facultyName;
+    private String name;
     private String email;
 }
