@@ -17,5 +17,11 @@
 - Use DTOs for data transfer
 - Apply layered architecture: Controller - Service - Repository
 - Map data between Entity and DTO
+  
+## Future Enhancements
+- Implement authentication and authorization using Spring Security and JWT
+- Support refresh tokens and token expiration management
+- Add system logging and centralized exception handling
+
 
 > Spring Boot practice project
