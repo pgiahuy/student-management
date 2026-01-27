@@ -7,8 +7,7 @@ public class StudentMapper {
     public static StudentResponseDTO toResponseDTO(StudentEntity student) {
         return StudentResponseDTO.builder()
                 .id(student.getId())
-                .firstName(student.getFirstName())
-                .lastName(student.getLastName())
+                .fullName(student.getFullName())
                 .email(student.getEmail())
                 .classId(student.getAClass().getId())
                 .className(student.getAClass().getClassName())

@@ -10,8 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class StudentResponseDTO {
     private String id;
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String email;
 
     private Long classId;

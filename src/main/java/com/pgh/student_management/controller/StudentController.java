@@ -24,17 +24,21 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    @GetMapping("/search")
+    public List<StudentResponseDTO> search(
+            @RequestParam(required = false) String fullName,
+            @RequestParam(required = false) Long classId,
+            @RequestParam(required = false) Long facultyId
+    ) {
+        return studentService.searchStudents(fullName, classId, facultyId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<StudentResponseDTO> getStudentById(@PathVariable String id) {
         StudentResponseDTO studentResponseDTO = studentService.getStudentById(id);
         return studentResponseDTO!=null ?  ResponseEntity.ok(studentResponseDTO) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/by-class/{classId}")
-    public ResponseEntity<List<StudentResponseDTO>> getStudentsByClass(@PathVariable Long classId) {
-        List<StudentResponseDTO> students = studentService.getStudentsByClassId(classId);
-        return students != null ? ResponseEntity.ok(students) : ResponseEntity.noContent().build();
-    }
 
     @PostMapping
     public ResponseEntity<StudentResponseDTO> createStudent(@RequestBody StudentRequestDTO request) {

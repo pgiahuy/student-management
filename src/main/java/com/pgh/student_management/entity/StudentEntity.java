@@ -19,10 +19,7 @@ public class StudentEntity {
     private String id;
 
     @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
+    private String fullName;
 
     @Column(nullable = false, unique = true)
     private String email;
