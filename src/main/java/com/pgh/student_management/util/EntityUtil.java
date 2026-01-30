@@ -1,11 +1,11 @@
-package com.pgh.student_management.utils;
+package com.pgh.student_management.util;
 
 import org.springframework.beans.BeanUtils;
 
 import java.beans.FeatureDescriptor;
 import java.util.stream.Stream;
 
-public class EntityUtils {
+public class EntityUtil {
     public static void copyNoNullProperties(Object source, Object target) {
         BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
     }

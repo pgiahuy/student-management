@@ -24,6 +24,9 @@ public class StudentEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
+
+    private String avatar = "";
+
     @ManyToOne()
     @JoinColumn(name = "class_id", nullable = false)
     private ClassEntity aClass;

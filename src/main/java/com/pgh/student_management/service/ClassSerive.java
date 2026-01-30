@@ -7,11 +7,9 @@ import com.pgh.student_management.entity.FacultyEntity;
 import com.pgh.student_management.mapper.ClassMapper;
 import com.pgh.student_management.repository.ClassRepository;
 import com.pgh.student_management.repository.FacultyRepository;
-import com.pgh.student_management.repository.StudentRepository;
-import com.pgh.student_management.utils.EntityUtils;
+import com.pgh.student_management.util.EntityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -52,7 +50,7 @@ public class ClassSerive {
         ClassEntity c =  classRepository.findById(id).orElseThrow(()->
                 new RuntimeException("Class Not Found"));
 
-        EntityUtils.copyNoNullProperties(request, c);
+        EntityUtil.copyNoNullProperties(request, c);
 
         if (request.getFacultyId() != null) {
             FacultyEntity fa = facultyRepository.findById(request.getFacultyId())

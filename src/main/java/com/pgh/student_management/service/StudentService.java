@@ -6,7 +6,7 @@ import com.pgh.student_management.entity.StudentEntity;
 import com.pgh.student_management.mapper.StudentMapper;
 import com.pgh.student_management.repository.ClassRepository;
 import com.pgh.student_management.repository.StudentRepository;
-import com.pgh.student_management.utils.EntityUtils;
+import com.pgh.student_management.util.EntityUtil;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import lombok.RequiredArgsConstructor;
@@ -72,7 +72,7 @@ public class StudentService {
     public StudentResponseDTO updateStudent (String id,StudentRequestDTO request) {
         StudentEntity student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        EntityUtils.copyNoNullProperties(request,student);
+        EntityUtil.copyNoNullProperties(request,student);
 
         if (request.getClassId() != null) {
             ClassEntity clazz = classRepository.findById(request.getClassId())

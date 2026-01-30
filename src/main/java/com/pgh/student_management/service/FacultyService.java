@@ -5,11 +5,10 @@ import com.pgh.student_management.dto.response.FacultyResponseDTO;
 import com.pgh.student_management.entity.FacultyEntity;
 import com.pgh.student_management.mapper.FacultyMapper;
 import com.pgh.student_management.repository.FacultyRepository;
-import com.pgh.student_management.utils.EntityUtils;
+import com.pgh.student_management.util.EntityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -38,7 +37,7 @@ public class FacultyService {
     public FacultyResponseDTO updateFaculty(Long id, FacultyRequestDTO request) {
         FacultyEntity fac = facultyRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("faculty not found"));
-        EntityUtils.copyNoNullProperties(request,fac);
+        EntityUtil.copyNoNullProperties(request,fac);
         facultyRepository.save(fac);
         return FacultyMapper.toResponseDTO(fac);
     }
